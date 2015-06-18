@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<style>
+		#outer {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			background-color: blue;
+			position: relative;
+			font-size: 0;
+		}
+		#inner {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: 180px;
+			height: 180px;
+			text-align: center;
+			line-height: 180px;
+			border-radius: 50%;
+			background-color: #ddd;
+			font-size: 20px;
+		}
+		#left {
+			width: 100px;
+			height: 100%;
+			display: inline-block;
+			vertical-align: top;
+		}
+		#right {
+			width: 100px;
+			height: 10px;
+			display: inline-block;
+			vertical-align: top;
+			background-color: red;
+			position: relative;
+		}
+		#right:after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			content: ' ';
+			width: 100px;
+			height: 200px;
+		}
+		#right_angle {
+			position: absolute;
+			display: inline-block;
+			top: 0;
+			left: 0;
+			height: 0;
+			width: 0;
+			border-top-width: 0;
+			border-top-style: solid;
+			border-top-color: red;
+			border-left: none;
+			border-right-width: 0;
+			border-right-style: solid;
+			border-right-color: transparent;
+			border-bottom-width: 0;
+			border-bottom-style: solid;
+			border-bottom-color: transparent;
+		}
+		#shadow {
+			width: 200px;
+			height: 200px;
+			background: rgba(0, 0, 0, 0);
+			border-radius: 50%;
+			border: 10px solid #FFF;
+			position: absolute;
+			top: -10px;
+			left: -10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="outer">
+		<div id="left">
+			<span id="left_angle"></span>
+		</div>
+		<div id="right">
+			<span id="right_angle"></span>
+		</div>
+		<div id="inner">50%</div>
+		<div id="shadow"></div>
+	</div>
+	<script>
+		var rightHeight,
+			rightAngleWidth,
+			doc = document,
+			right = doc.getElementById('right'),
+			rightAngle = doc.getElementById('right_angle'),
+		    rightStyle = window.getComputedStyle(right, null),
+		    rightHeight = +rightStyle.height.slice(0, -2);
+
+		rightAngle.style.top = rightHeight + 'px';
+		rightAngle.style.borderTopWidth = (100 - rightHeight) + 'px';
+		rightAngle.style.borderRightWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
+		// rightAngle.style.borderBottomWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
