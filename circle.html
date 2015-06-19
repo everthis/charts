@@ -33,7 +33,7 @@
 		}
 		#right {
 			width: 100px;
-			height: 10px;
+			height: 0;
 			display: inline-block;
 			vertical-align: top;
 			background-color: red;
@@ -85,7 +85,7 @@
 		<div id="right">
 			<span id="right_angle"></span>
 		</div>
-		<div id="inner">50%</div>
+		<div id="inner">80%</div>
 		<div id="shadow"></div>
 	</div>
 	<script>
@@ -95,19 +95,25 @@
 			right = doc.getElementById('right'),
 			rightAngle = doc.getElementById('right_angle'),
 		    rightStyle = window.getComputedStyle(right, null),
-		    rightHeight = +rightStyle.height.slice(0, -2);
+		    rightHeight = +rightStyle.height.slice(0, -2),
+		    inner = doc.getElementById('inner'),
+		    innerText = inner.textContent;
 
+		rightHeight = 200 * (parseFloat(innerText) / 100.0);
+		right.style.height = rightHeight + 'px';
 		rightAngle.style.top = rightHeight + 'px';
-		rightAngle.style.borderTopWidth = (100 - rightHeight) + 'px';
-		rightAngle.style.borderRightWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
-		// rightAngle.style.borderBottomWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
+		if (parseFloat(innerText) > 50) {
+			// rightAngle.style.borderTopColor = 'transparent';
+			// rightAngle.style.borderLeftColor = 'blue';
+			// rightAngle.style.borderTopWidth = (200 - rightHeight) + 'px';
+			// rightAngle.style.borderRightWidth = 0 + 'px';
+			// rightAngle.style.borderLeftWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
+		} else {
+			rightAngle.style.borderTopWidth = (100 - rightHeight) + 'px';
+			rightAngle.style.borderRightWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
+		}
 
-
-
-
-
-
-
+		
 
 	</script>
 </body>
