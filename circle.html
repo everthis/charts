@@ -22,7 +22,6 @@
 			text-align: center;
 			line-height: 180px;
 			border-radius: 50%;
-			background-color: #ddd;
 			font-size: 20px;
 		}
 		#left {
@@ -66,12 +65,10 @@
 		#shadow {
 			width: 200px;
 			height: 200px;
-			background: rgba(0, 0, 0, 0);
-			border-radius: 50%;
-			border: 10px solid #FFF;
+			background: url('cover.png') center no-repeat;
 			position: absolute;
-			top: -10px;
-			left: -10px;
+			top: 0;
+			left: 0;
 		}
 
 		.arrow-right {
@@ -86,14 +83,12 @@
 </head>
 <body>
 	<div id="outer">
-		<div id="left">
-			<span id="left_angle"></span>
-		</div>
+		<div id="left"></div>
 		<div id="right">
 			<span id="angle"></span>
 		</div>
-		<div id="inner">15%</div>
 		<div id="shadow"></div>
+		<div id="inner">45%</div>
 	</div>
 
 
