@@ -27,9 +27,10 @@
 		}
 		#left {
 			width: 100px;
-			height: 100%;
+			height: 0;
 			display: inline-block;
-			vertical-align: top;
+			vertical-align: bottom;
+			background-color: red;
 		}
 		#right {
 			width: 100px;
@@ -47,23 +48,20 @@
 			width: 100px;
 			height: 200px;
 		}
-		#right_angle {
+		#left_angle {
 			position: absolute;
 			display: inline-block;
 			top: 0;
+			right: 0;
+			height: 0;
+			width: 0;
+		}
+		#angle {
+			position: absolute;
+			display: inline-block;
 			left: 0;
 			height: 0;
 			width: 0;
-			border-top-width: 0;
-			border-top-style: solid;
-			border-top-color: red;
-			border-left: none;
-			border-right-width: 0;
-			border-right-style: solid;
-			border-right-color: transparent;
-			border-bottom-width: 0;
-			border-bottom-style: solid;
-			border-bottom-color: transparent;
 		}
 		#shadow {
 			width: 200px;
@@ -75,6 +73,15 @@
 			top: -10px;
 			left: -10px;
 		}
+
+		.arrow-right {
+			width: 0; 
+			height: 0; 
+			/*border-top: 60px solid transparent;*/
+			/*border-bottom: 60px solid transparent;*/
+			
+			/*border-left: 60px solid green;*/
+		}
 	</style>
 </head>
 <body>
@@ -83,37 +90,65 @@
 			<span id="left_angle"></span>
 		</div>
 		<div id="right">
-			<span id="right_angle"></span>
+			<span id="angle"></span>
 		</div>
-		<div id="inner">80%</div>
+		<div id="inner">15%</div>
 		<div id="shadow"></div>
 	</div>
+
+
 	<script>
+		function phaseOne() {
+			
+			angle.style.top = rightHeight + 'px';			
+			angle.style.borderBottom = (100 - rightHeight) + 'px' + " solid transparent";
+			angle.style.borderLeft = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px' + " solid " + fillColor;
+		}
+		function phaseTwo() {
+			
+			angle.style.top = 100 + 'px';
+			angle.style.borderTop = (rightHeight - 100) + 'px' + " solid transparent";
+			angle.style.borderLeft = Math.sqrt(Math.pow(100, 2) - Math.pow(rightHeight - 100, 2)) + 'px' + " solid " + bgColor;
+		}
+		function phaseThree() {
+			angle.style.left = -(Math.sqrt(Math.pow(100, 2) - Math.pow(leftHeight - 100, 2))) + 'px';
+			angle.style.top = '100px';
+			angle.style.borderTop = (100 - leftHeight) + 'px' + " solid " + bgColor;
+			angle.style.borderRight = Math.sqrt(Math.pow(100, 2) - Math.pow(leftHeight - 100, 2)) + 'px' + " solid " + fillColor;
+		}
+		function phaseFour() {
+			angle.style.left = -(Math.sqrt(Math.pow(100, 2) - Math.pow(leftHeight - 100, 2))) + 'px';
+			angle.style.bottom = 100 + 'px'; 
+			angle.style.borderBottom = (leftHeight - 100) + 'px' + " solid " + fillColor;
+			angle.style.borderRight = Math.sqrt(Math.pow(100, 2) - Math.pow(leftHeight - 100, 2)) + 'px' + " solid " + bgColor;
+		}
+		function angleRight() {
+			rightHeight = 400 * (parseFloat(innerText) / 100.0);
+			right.style.height = rightHeight + 'px';
+			parseFloat(innerText) > 25 ? phaseTwo() : phaseOne();
+		}
+		function angleLeft() {
+			leftHeight = 400 * ( (parseFloat(innerText) - 50) / 100.0);
+			right.style.height = '100%';
+			left.style.height = leftHeight + 'px';
+			parseFloat(innerText) > 75 ? phaseFour() : phaseThree();
+		}
 		var rightHeight,
-			rightAngleWidth,
+			angleWidth,
 			doc = document,
 			right = doc.getElementById('right'),
-			rightAngle = doc.getElementById('right_angle'),
+			left = doc.getElementById('left'),
+			angle = doc.getElementById('angle'),
 		    rightStyle = window.getComputedStyle(right, null),
+		    leftStyle = window.getComputedStyle(left, null),
+		    leftHeight = +leftStyle.height.slice(0, -2),
 		    rightHeight = +rightStyle.height.slice(0, -2),
 		    inner = doc.getElementById('inner'),
-		    innerText = inner.textContent;
-
-		rightHeight = 200 * (parseFloat(innerText) / 100.0);
-		right.style.height = rightHeight + 'px';
-		rightAngle.style.top = rightHeight + 'px';
-		if (parseFloat(innerText) > 50) {
-			// rightAngle.style.borderTopColor = 'transparent';
-			// rightAngle.style.borderLeftColor = 'blue';
-			// rightAngle.style.borderTopWidth = (200 - rightHeight) + 'px';
-			// rightAngle.style.borderRightWidth = 0 + 'px';
-			// rightAngle.style.borderLeftWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
-		} else {
-			rightAngle.style.borderTopWidth = (100 - rightHeight) + 'px';
-			rightAngle.style.borderRightWidth = Math.sqrt(Math.pow(100, 2) - Math.pow(100 - rightHeight, 2)) + 'px';
-		}
-
+		    innerText = inner.textContent,
+		    bgColor = 'blue',
+		    fillColor = 'red';	
 		
+		parseFloat(innerText) > 50 ? angleLeft() : angleRight();
 
 	</script>
 </body>
